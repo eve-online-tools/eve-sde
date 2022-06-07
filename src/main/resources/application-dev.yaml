@@ -1,0 +1,38 @@
+server:
+  port : 8080
+
+spring:
+  application:
+    name: evetoolsuite-sde
+  datasource:
+    url: ${JDBC_DATABASE_URL:jdbc:mariadb://localhost:3307/eve-sde}
+    username: ${JDBC_DATABASE_USERNAME:eve}
+    password: ${JDBC_DATABASE_PASSWORD:eve}
+  jpa:
+    show-sql: true
+    hibernate:
+      #ddl-auto: validate
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+    properties:
+      hibernate:
+        globally_quoted_identifiers: true
+        default_schema: evesde
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka
+      register-with-eureka: true
+      fetch-registry: true
+
+logging:
+  level:
+    root: INFO
+    de:
+      ronnywalter:
+        eve: INFO
+    com.github.kagkarlsson: INFO
+    org:
+      hibernate:
+        SQL: debug

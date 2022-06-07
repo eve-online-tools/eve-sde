@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: sde-db
+  name: database
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sde-db
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: sde-db
+    spec:
+      containers:
+      - image: ghcr.io/rowa78/mysql-sde:20220523
+        name: sde-db
+        ports:
+          - containerPort: 3306
+        resources: {}
+status: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: sde-db
+spec:
+  ports:
+    - port: 3306
+  selector:
+    app: sde-db
+  type: ClusterIP

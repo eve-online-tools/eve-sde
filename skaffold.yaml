@@ -1,0 +1,14 @@
+apiVersion: skaffold/v2beta28
+kind: Config
+metadata:
+  name: sde
+build:
+  artifacts:
+  - image: r0wa/sde
+    jib:
+      project: de.ronnywalter.eve:sde
+deploy:
+  kubectl:
+    manifests:
+    - k8s/deployment.yaml
+    - k8s/database.yaml
