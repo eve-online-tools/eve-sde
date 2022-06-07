@@ -26,10 +26,8 @@ jobs:
       run: mvn -B package --file pom.xml
       env:
         GITHUB_TOKEN: ${{ secrets.DEPLOY_GITHUB_TOKEN }}
-    - name: Get version
+    - name: Set Release version env variable
       run: |
-        VERSION=$( mvn help:evaluate -Dexpression=project.version -q -DforceStdout )
-        echo "::set-output name=version::$VERSION"
-      id: get_version
+        echo "RELEASE_VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)" >> $GITHUB_ENV
     - name: Build the Docker image
-      run: docker buildx build --platform linux/amd64,linux/arm64/v8 --no-cache . --file Dockerfile --tag ghcr.io/eve-online-tools/eve-sde:$VERSION
+      run: docker buildx build --platform linux/amd64,linux/arm64/v8 --no-cache . --file Dockerfile --tag ghcr.io/eve-online-tools/eve-sde:${{ env.RELEASE_VERSION }}
