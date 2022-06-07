@@ -27,10 +27,10 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.DEPLOY_GITHUB_TOKEN }}
     - name: Get version
-        run: |
-          VERSION=$( mvn help:evaluate -Dexpression=project.version -q -DforceStdout )
-          echo "::set-output name=version::$VERSION"
-        id: get_version
+      run: |
+        VERSION=$( mvn help:evaluate -Dexpression=project.version -q -DforceStdout )
+        echo "::set-output name=version::$VERSION"
+      id: get_version
     - name: Build the Docker image
       uses: actions/checkout@v3
       run: buildx build --platform linux/amd64,linux/arm64/v8 --no-cache . --file Dockerfile --tag ghcr.io/eve-online-tools/eve-sde:$VERSION
