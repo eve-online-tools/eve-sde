@@ -39,5 +39,7 @@ jobs:
         echo "Status:    ${{ steps.buildx.outputs.status }}"
         echo "Flags:     ${{ steps.buildx.outputs.flags }}"
         echo "Platforms: ${{ steps.buildx.outputs.platforms }}"
+    - name: Log in to registry
+      run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u $ --password-stdin
     - name: Build the Docker image
       run: docker buildx build --platform linux/amd64,linux/arm64/v8 --no-cache . --file Dockerfile --tag ghcr.io/eve-online-tools/eve-sde:${{ env.RELEASE_VERSION }} --push
