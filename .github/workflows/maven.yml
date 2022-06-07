@@ -40,4 +40,4 @@ jobs:
         echo "Flags:     ${{ steps.buildx.outputs.flags }}"
         echo "Platforms: ${{ steps.buildx.outputs.platforms }}"
     - name: Build the Docker image
-      run: docker buildx build --platform linux/amd64,linux/arm64/v8 --no-cache . --file Dockerfile --tag ghcr.io/eve-online-tools/eve-sde:${{ env.RELEASE_VERSION }}
+      run: docker buildx build --platform linux/amd64,linux/arm64/v8 --no-cache . --file Dockerfile --tag ghcr.io/eve-online-tools/eve-sde:${{ env.RELEASE_VERSION }} --push
