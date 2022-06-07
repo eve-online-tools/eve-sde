@@ -89,7 +89,7 @@
 
 		<dependency>
 			<groupId>de.ronnywalter.eve</groupId>
-			<artifactId>dto</artifactId>
+			<artifactId>eve-dto</artifactId>
 			<version>1.0-SNAPSHOT</version>
 		</dependency>
 		<dependency>
