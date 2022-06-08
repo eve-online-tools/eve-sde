@@ -46,7 +46,7 @@ jobs:
     - name: Build the Database-Docker image
       run: docker buildx build --platform linux/amd64,linux/arm64/v8 --no-cache . --file Dockerfile-SDEDatabase --tag ghcr.io/eve-online-tools/eve-sde-mariadb:$(date +%Y%m%d) --push
     - name: 'Deploy'
-      uses: 'deliverybot/helm@master'
+      uses: 'glopezep/helm@v1.7.1'
       with:
         release: 'nginx'
         namespace: 'eve-dev'
