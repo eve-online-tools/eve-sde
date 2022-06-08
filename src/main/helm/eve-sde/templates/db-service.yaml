@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "eve-sde.fullname" . }}-db
+  labels:
+    {{- include "eve-sde-db.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.db.service.type }}
+  ports:
+    - port: {{ .Values.db.service.port }}
+      targetPort: 3306
+      protocol: TCP
+      name: db
+  selector:
+    {{- include "eve-sde-db.selectorLabels" . | nindent 4 }}
