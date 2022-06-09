@@ -65,7 +65,7 @@ spec:
     VERSION = readMavenPom().getVersion()
     BUILD_RELEASE_VERSION = readMavenPom().getVersion().replace("-SNAPSHOT", "")
     IS_SNAPSHOT = readMavenPom().getVersion().endsWith("-SNAPSHOT")
-    TARGET_REGISTRY = "ghcr.io/eve-online-tools/"
+    TARGET_REGISTRY = "ghcr.io/eve-online-tools"
   }
 
   stages {
