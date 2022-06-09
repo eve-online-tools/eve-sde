@@ -83,7 +83,7 @@ spec:
     stage('create & push docker-image') {
         steps {        
           container('kaniko') {
-              sh "/kaniko/executor --skip-tls-verify --dockerfile `pwd`/Dockerfile --context `pwd` --destination $TARGET_REGISTRY/eve-sde:$VERSION --cleanup"
+              sh "/kaniko/executor --dockerfile `pwd`/Dockerfile --context `pwd` --destination $TARGET_REGISTRY/eve-sde:$VERSION --cleanup"
           }
         }
       }
@@ -91,7 +91,7 @@ spec:
       stage('create & push sde-database-docker-image') {
           steps {
             container('kaniko') {
-                sh "/kaniko/executor --skip-tls-verify --dockerfile `pwd`/Dockerfile-SDEDatabase --context `pwd` --destination $TARGET_REGISTRY/eve-sde-mariadb:$VERSION --cleanup"
+                sh "/kaniko/executor --dockerfile `pwd`/Dockerfile-SDEDatabase --context `pwd` --destination $TARGET_REGISTRY/eve-sde-mariadb:$VERSION --cleanup"
             }
           }
         }
