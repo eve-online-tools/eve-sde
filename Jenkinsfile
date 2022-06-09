@@ -1,5 +1,6 @@
 pipeline {
   agent {
+        idleMinutes: 10
         kubernetes {
 yaml """
 apiVersion: v1
