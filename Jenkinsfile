@@ -1,6 +1,6 @@
 pipeline {
   agent {
-        idleMinutes: 10
+
         kubernetes {
 yaml """
 apiVersion: v1
@@ -58,6 +58,7 @@ spec:
   imagePullSecrets:
     - name: externalregistry
 """
+    idleMinutes: 10
     }
   }
     
