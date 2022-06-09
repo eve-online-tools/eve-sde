@@ -58,7 +58,7 @@ spec:
   imagePullSecrets:
     - name: externalregistry
 """
-    idleMinutes: 10
+    idleMinutes 10
     }
   }
     
