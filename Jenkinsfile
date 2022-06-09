@@ -74,7 +74,7 @@ spec:
         container('maven') {
   	      sh 'mvn --version'
   	        configFileProvider([configFile(fileId: 'maven-settings.xml', variable: 'MAVEN_SETTINGS')]) {
-  	            sh 'mvn -s $MAVEN_SETTINGS -U -T 1C clean deploy'
+  	            sh 'mvn -s $MAVEN_SETTINGS -U -T 1C clean package'
   	        }
         }
      }
@@ -87,5 +87,13 @@ spec:
           }
         }
       }
+
+      stage('create & push sde-database-docker-image') {
+          steps {
+            container('kaniko') {
+                sh "/kaniko/executor --skip-tls-verify --dockerfile `pwd`/Dockerfile-SDEDatabase --context `pwd` --destination $TARGET_REGISTRY/eve-sde-mariadb:$VERSION --cleanup"
+            }
+          }
+        }
   }
 }
