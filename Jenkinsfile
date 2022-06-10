@@ -76,7 +76,7 @@ spec:
         container('maven') {
   	      sh 'mvn --version'
   	        configFileProvider([configFile(fileId: 'maven-settings.xml', variable: 'MAVEN_SETTINGS')]) {
-  	            sh 'mvn -s $MAVEN_SETTINGS -U -T 1C clean package'
+  	            //sh 'mvn -s $MAVEN_SETTINGS -U -T 1C clean package'
   	        }
         }
      }
