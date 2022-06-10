@@ -93,7 +93,7 @@ spec:
       stage('create & push sde-database-docker-image') {
           steps {
             container('kaniko') {
-                sh "/kaniko/executor --dockerfile `pwd`/Dockerfile-SDEDatabase --context `pwd` --destination $TARGET_REGISTRY/eve-sde-mariadb:$VERSION --cleanup"
+                sh "/kaniko/executor --dockerfile `pwd`/DockerfileDatabase --context `pwd` --destination $TARGET_REGISTRY/eve-sde-mariadb:$VERSION --cleanup"
             }
           }
         }
