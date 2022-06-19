@@ -35,6 +35,9 @@ spec:
         initialDelaySeconds: 10
         failureThreshold: 6
       volumeMounts:
+        - name: m2
+          persistentVolumeClaim:
+            claimName: cache
         - name: jenkins-docker-cfg
           mountPath: /root/.docker/config.json
           subPath: config.json
