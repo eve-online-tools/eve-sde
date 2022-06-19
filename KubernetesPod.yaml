@@ -20,9 +20,9 @@ spec:
       command:
         - cat
       tty: true
-      #volumeMounts:
-      #  - mountPath: /root/.m2/repository
-      #    name: m2
+      volumeMounts:
+        - mountPath: /root/.m2/repository
+          name: m2
     - name: dind
       image: ghcr.io/eve-online-tools/dind-buildx:0.3
       imagePullPolicy: IfNotPresent

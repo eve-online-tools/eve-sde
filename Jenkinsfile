@@ -34,12 +34,32 @@ pipeline {
                   if (env.IS_SNAPSHOT) {
                     sh "docker buildx build --platform linux/amd64,linux/arm64/v8 -f `pwd`/Dockerfile -t $TARGET_REGISTRY/eve-sde:$BUILD_RELEASE_VERSION-${env.GIT_COMMIT} --push `pwd`"
                   } else {
-
+                    sh "docker buildx build --platform linux/amd64,linux/arm64/v8 -f `pwd`/Dockerfile -t $TARGET_REGISTRY/eve-sde:$BUILD_RELEASE_VERSION --push `pwd`"
                   }
               }
 
           }
         }
       }
+
+     stage('deploy') {
+           steps {
+             container('tools') {
+
+                 withCredentials([string(credentialsId: 'k8s-server-url', variable: 'SERVER_URL')]) {
+                     withKubeConfig([credentialsId: "k8s-credentials", serverUrl: "$SERVER_URL"]) {
+                          script {
+                                if (env.IS_SNAPSHOT) {
+                                  sh 'helm -n $NAMESPACE upgrade -i eve-sde-db `pwd`/src/main/helm/eve-sde --set image.tag=$TARGET_REGISTRY/eve-sde:$BUILD_RELEASE_VERSION-${env.GIT_COMMIT} --wait'
+                                } else {
+                                  sh 'helm -n $NAMESPACE upgrade -i eve-sde-db `pwd`/src/main/helm/eve-sde --set image.tag=$TARGET_REGISTRY/eve-sde:$BUILD_RELEASE_VERSION--wait'
+                                }
+                            }
+
+                     }
+                 }
+             }
+           }
+       }
   }
 }
