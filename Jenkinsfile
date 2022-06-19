@@ -1,7 +1,7 @@
 pipeline {
   agent {
         kubernetes {
-            yamlFile 'KubernetesPod.yaml',
+            yamlFile 'KubernetesPod.yaml'
             //workspaceVolume: persistentVolumeClaimWorkspaceVolume(claimName: 'workspace', readOnly: false)
         }
   }
