@@ -12,6 +12,7 @@ pipeline {
     BUILD_RELEASE_VERSION = readMavenPom().getVersion().replace("-SNAPSHOT", "")
     IS_SNAPSHOT = readMavenPom().getVersion().endsWith("-SNAPSHOT")
     TARGET_REGISTRY = "ghcr.io/eve-online-tools"
+    NAMESPACE = "eve-dev"
   }
 
   stages {
@@ -32,7 +33,7 @@ pipeline {
               sh "docker buildx create --use"
               script {
                   if (env.IS_SNAPSHOT) {
-                    sh "docker buildx build --platform linux/amd64,linux/arm64/v8 -f `pwd`/Dockerfile -t $TARGET_REGISTRY/eve-sde:$BUILD_RELEASE_VERSION-${env.GIT_COMMIT} --push `pwd`"
+                    sh "docker buildx build --platform linux/amd64,linux/arm64/v8 -f `pwd`/Dockerfile -t $TARGET_REGISTRY/eve-sde:$BUILD_RELEASE_VERSION-${env.BUILD_NUMBER} --push `pwd`"
                   } else {
                     sh "docker buildx build --platform linux/amd64,linux/arm64/v8 -f `pwd`/Dockerfile -t $TARGET_REGISTRY/eve-sde:$BUILD_RELEASE_VERSION --push `pwd`"
                   }
@@ -50,7 +51,7 @@ pipeline {
                      withKubeConfig([credentialsId: "k8s-credentials", serverUrl: "$SERVER_URL"]) {
                           script {
                                 if (env.IS_SNAPSHOT) {
-                                  sh "helm -n $NAMESPACE upgrade -i eve-sde `pwd`/src/main/helm/eve-sde --set image.tag=$TARGET_REGISTRY/eve-sde:$BUILD_RELEASE_VERSION-${env.GIT_COMMIT} --wait"
+                                  sh "helm -n $NAMESPACE upgrade -i eve-sde `pwd`/src/main/helm/eve-sde --set image.tag=$TARGET_REGISTRY/eve-sde:$BUILD_RELEASE_VERSION-${env.BUILD_NUMBER} --wait"
                                 } else {
                                   sh "helm -n $NAMESPACE upgrade -i eve-sde `pwd`/src/main/helm/eve-sde --set image.tag=$TARGET_REGISTRY/eve-sde:$BUILD_RELEASE_VERSION --wait"
                                 }
