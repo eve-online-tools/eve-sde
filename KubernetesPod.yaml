@@ -14,6 +14,15 @@ spec:
       command:
         - cat
       tty: true
+    - name: maven
+      image: maven:3.8.5-eclipse-temurin-17
+      imagePullPolicy: IfNotPresent
+      command:
+        - cat
+      tty: true
+      volumeMounts:
+        - mountPath: /root/.m2/repository
+          name: m2
     - name: dind
       image: ghcr.io/eve-online-tools/dind-buildx:0.3
       imagePullPolicy: IfNotPresent
