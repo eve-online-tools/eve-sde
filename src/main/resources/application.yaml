@@ -19,6 +19,15 @@ spring:
         globally_quoted_identifiers: true
         default_schema: evesde
 
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: ALWAYS
+
 eureka:
   client:
     register-with-eureka: false

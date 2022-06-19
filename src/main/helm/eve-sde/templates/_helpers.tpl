@@ -34,6 +34,7 @@ Create chart name and version as used by the chart label.
 Common labels
 */}}
 {{- define "eve-sde.labels" -}}
+spring-boot: "true"
 helm.sh/chart: {{ include "eve-sde.chart" . }}
 {{ include "eve-sde.selectorLabels" . }}
 {{- if .Chart.AppVersion }}
