@@ -10,18 +10,6 @@ image:
   # Overrides the image tag whose default is the chart appVersion.
   tag: ""
 
-db:
-  image:
-    repository: ghcr.io/eve-online-tools/eve-sde-mariadb
-    pullPolicy: Always
-    # Overrides the image tag whose default is the chart appVersion.
-    tag: "20220514"
-  service:
-    type: ClusterIP
-    port: 3306
-  nodeSelector:
-    kubernetes.io/arch: amd64
-
 imagePullSecrets:
   - name: externalregistry
 nameOverride: ""
@@ -85,8 +73,7 @@ autoscaling:
   targetCPUUtilizationPercentage: 80
   # targetMemoryUtilizationPercentage: 80
 
-nodeSelector:
-  kubernetes.io/arch: amd64
+nodeSelector: {}
 
 tolerations: []
 
