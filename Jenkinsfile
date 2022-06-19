@@ -50,9 +50,9 @@ pipeline {
                      withKubeConfig([credentialsId: "k8s-credentials", serverUrl: "$SERVER_URL"]) {
                           script {
                                 if (env.IS_SNAPSHOT) {
-                                  sh 'helm -n $NAMESPACE upgrade -i eve-sde `pwd`/src/main/helm/eve-sde --set image.tag=$TARGET_REGISTRY/eve-sde:$BUILD_RELEASE_VERSION-${env.GIT_COMMIT} --wait'
+                                  sh "helm -n $NAMESPACE upgrade -i eve-sde `pwd`/src/main/helm/eve-sde --set image.tag=$TARGET_REGISTRY/eve-sde:$BUILD_RELEASE_VERSION-${env.GIT_COMMIT} --wait"
                                 } else {
-                                  sh 'helm -n $NAMESPACE upgrade -i eve-sde `pwd`/src/main/helm/eve-sde --set image.tag=$TARGET_REGISTRY/eve-sde:$BUILD_RELEASE_VERSION --wait'
+                                  sh "helm -n $NAMESPACE upgrade -i eve-sde `pwd`/src/main/helm/eve-sde --set image.tag=$TARGET_REGISTRY/eve-sde:$BUILD_RELEASE_VERSION --wait"
                                 }
                             }
 
