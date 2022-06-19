@@ -32,7 +32,7 @@ pipeline {
               sh "docker buildx create --use"
               script {
                   if (env.IS_SNAPSHOT) {
-                    sh "docker buildx build --platform linux/amd64,linux/arm64/v8 -f `pwd`/Dockerfile -t $TARGET_REGISTRY/eve-sde:$BUILD_RELEASE_VERSION+${env.GIT_COMMIT} --push `pwd`"
+                    sh "docker buildx build --platform linux/amd64,linux/arm64/v8 -f `pwd`/Dockerfile -t $TARGET_REGISTRY/eve-sde:$BUILD_RELEASE_VERSION-${env.GIT_COMMIT} --push `pwd`"
                   } else {
 
                   }
