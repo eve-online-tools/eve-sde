@@ -33,7 +33,7 @@ pipeline {
               sh "docker buildx create --use"
               script {
                   sh "printenv"
-                  if (env.IS_SNAPSHOT == true) {
+                  if (env.IS_SNAPSHOT.toBoolean() == true) {
                     sh "docker buildx build --platform linux/amd64,linux/arm64/v8 -f `pwd`/Dockerfile -t $TARGET_REGISTRY/eve-sde:$BUILD_RELEASE_VERSION-${env.BUILD_NUMBER} --push `pwd`"
                   } else {
                     sh "docker buildx build --platform linux/amd64,linux/arm64/v8 -f `pwd`/Dockerfile -t $TARGET_REGISTRY/eve-sde:$BUILD_RELEASE_VERSION --push `pwd`"
@@ -52,7 +52,7 @@ pipeline {
                      withKubeConfig([credentialsId: "k8s-credentials", serverUrl: "$SERVER_URL"]) {
                           script {
 
-                                if (env.IS_SNAPSHOT == true) {
+                                if (env.IS_SNAPSHOT.toBoolean() == true) {
                                   sh "helm -n $NAMESPACE upgrade -i eve-sde `pwd`/src/main/helm/eve-sde --set image.tag=$BUILD_RELEASE_VERSION-${env.BUILD_NUMBER} --wait"
                                 } else {
                                   sh "helm -n $NAMESPACE upgrade -i eve-sde `pwd`/src/main/helm/eve-sde --set image.tag=$BUILD_RELEASE_VERSION --wait"
