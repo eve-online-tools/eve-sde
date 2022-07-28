@@ -4,6 +4,7 @@ metadata:
   name: {{ include "eve-sde.fullname" . }}
   labels:
     {{- include "eve-sde.labels" . | nindent 4 }}
+    spring-boot: "true"
 spec:
   type: {{ .Values.service.type }}
   ports:
